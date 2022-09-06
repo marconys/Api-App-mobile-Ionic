@@ -14,6 +14,23 @@ if($postjson['requisicao'] == 'add'){
     $query->bindValue(":nivel", $postjson['nivel']);
 
     $query->execute();
+
+    $id = $pdo->lastInsertId();
+
+    if($query){
+        $result = json_encode(array('success' =>true, 'id'=>$id));
+    }else{
+        $result = json_encode(array('success' =>false, 'msg'=>'Falha ao inserir usuário'));
+    }
+
+    echo $result;
     
+}//Final requisição add
+else if($postjson['requisicao'] == 'listar'){
+    if($postjson['nome'] == ''){
+        $query = $pdo->query("SELECT * FROM usuarios ORDER BY id DESC LIMIT $postjson['start'], $postjson['limit']");
+    }else{
+
+    }
 }
 ?>
