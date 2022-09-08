@@ -1,0 +1,49 @@
+Estrutura JSOM para inserir Usuários via API PHPH (api.php)
+
+{
+    "requisicao":"add",
+    "nome":"Maria das Couves",
+    "usuario":"mariac",
+    "senha":"123456",
+    "nivel":"admin"
+}
+
+Estrutura JSOM para listar por nome ou por usuario os usuários via API PHPH (api.php)
+
+{
+    "requisicao":"listar",
+    "nome":"",
+    "start":1,
+    "limit":10
+}
+
+Estrutura JSOM para atualizar os usuários via API PHPH (api.php)
+
+{
+    "requisicao":"editar",
+    "nome":"Zé do Parangolé",
+    "usuario":"zepagole",
+    "senha":"123456",
+    "nivel":"Caixa",
+    "id":1
+}
+
+Estrutura JSOM para excluir os usuários via API PHPH (api.php)
+
+{
+    "requisicao":"excluir",    
+    "id":1
+}
+
+{
+    "requisicao":"ativar",    
+    "id":1
+}
+
+Estrutura JSOM para login Usuários via API PHPH (api.php)
+
+{
+    "requisicao":"login",
+    "usuario":"elicana",
+    "senha":"123456",
+}

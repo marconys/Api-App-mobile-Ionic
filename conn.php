@@ -21,7 +21,7 @@ $senha = '';
 */
 
 try{
-    $pdo = new PDO("mysql: dbname=$banco;host=$host","$usuario","$senha");
+    $pdo = new PDO("mysql:dbname=$banco;host=$host",$usuario,$senha);
 
 
 }catch (Exception $e) {
