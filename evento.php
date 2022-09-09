@@ -9,8 +9,13 @@ $postjson = json_decode(file_get_contents('php://input', true), true);
 
 if ($postjson['requisicao'] == 'addevent') {
     $query = $pdo->prepare("insert into eventos set nome = :nome, data_evento = :data_evento, capacidade = :capacidade, usuarios_id = :usuarios_id, ativo = 1");
+    
+    $old_date = strtotime($postjson['data_evento']);
+    $new_date = date('d-m-Y H:i:s', $old_date);
+    
+    
     $query->bindValue(":nome", $postjson['nome']);
-    $query->bindValue(":data_evento", $postjson['data_evento']);
+    $query->bindValue(":data_evento", $new_date);
     $query->bindValue(":capacidade", $postjson['capacidade']);
     $query->bindValue(":usuarios_id", $postjson['usuarios_id']);
 
