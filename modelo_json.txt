@@ -47,3 +47,48 @@ Estrutura JSOM para login Usuários via API PHPH (api.php)
     "usuario":"elicana",
     "senha":"123456",
 }
+
+//Eventos
+
+Estrutura JSOM para inserir eventos via API PHPH (api.php)
+
+{
+    "requisicao":"addevent",
+    "nome":"Festa no canavial",
+    "data_evento":"30/05/2023",
+    "capacidade":100,
+    "usuarios_id":3
+    
+}
+
+Estrutura JSOM para listar eventos por nome ou por capacidade os eventos via API PHPH (api.php)
+
+{
+    "requisicao":"listarevent",
+    "nome":"plmeira",
+    "start":0,
+    "limit":10
+}
+
+Estrutura JSOM para atualizar os eventos via API PHPH (api.php)
+
+{
+    "requisicao":"editarevent",
+    "nome":"Zé do Parangolé",
+    "data_evento":"25/04/2026",
+    "capacidade":"20",
+    "id":3
+}
+
+Estrutura JSOM para excluir os eventos via API PHPH (api.php)
+
+{
+    "requisicao":"excluirevent",    
+    "id":3
+}
+
+Estrutura JSOM para excluir os eventos via API PHPH (api.php)
+{
+    "requisicao":"ativarevent",    
+    "id":3
+}

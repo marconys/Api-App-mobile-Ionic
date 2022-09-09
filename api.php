@@ -70,7 +70,7 @@ else if ($postjson['requisicao'] == 'editar') {
 } //Final da requisição Editar
 else if ($postjson['requisicao'] == 'excluir') {
     //$query = $pdo->query("DELETE FROM usuarios WHERE id = $postjson[id]");
-    $query = $pdo->query("UPDATE usuarios SET ativo = 0 WHERE id $postjson[id]");
+    $query = $pdo->query("UPDATE usuarios SET ativo = 0 WHERE id = $postjson[id]");
     if ($query) {
         $result = json_encode(array('success' => true, 'msg' => "Usuário excluido com sucesso"));
     } else {
@@ -99,11 +99,13 @@ else if ($postjson['requisicao'] == 'login') {
 } //Final do login
 
 else if ($postjson['requisicao'] == 'ativar') {
-    $query = $pdo->query("UPDATE usuarios SET ativo = 1 WHERE id $postjson[id]");
+    $query = $pdo->query("UPDATE usuarios SET ativo = 1 WHERE id = $postjson[id]");
     if ($query) {
-        $result = json_encode(array('success' => true, 'msg' => "Usuário excluido com sucesso"));
+        $result = json_encode(array('success' => true, 'msg' => "Usuário ativado com sucesso"));
     } else {
-        $result = json_encode(array('success' => false, 'msg' => "Falha ao excluir o usuário!"));
+        $result = json_encode(array('success' => false, 'msg' => "Falha ao ativar o usuário!"));
     }
     echo $result;
-}
+}//Final ativar
+
+
