@@ -1,8 +1,8 @@
 <?php
 //Api - Aplicação para recursos de app mobile
-//require('config.php');
+require('config.php');
 
-include_once('conn.php');
+//include_once('conn.php');
 
 //Variável que recebe o conteúdo da requisição do APP decodificando-a (json)
 $postjson = json_decode(file_get_contents('php://input', true), true);
@@ -28,13 +28,13 @@ if ($postjson['requisicao'] == 'add') {
     echo $result;
 } //Final requisição add
 else if ($postjson['requisicao'] == 'listar') {
+    $user = new Usuario();
     if ($postjson['nome'] == '') {
-        $query = $pdo->query("SELECT * FROM usuarios ORDER BY id DESC LIMIT $postjson[start], $postjson[limit]");
+      $res = Usuario::getList();
     } else {
-        $busca = '%' . $postjson['nome'] . '%';
-        $query = $pdo->query("SELECT * FROM usuarios WHERE nome LIKE '$busca' OR usuario LIKE '$busca' ORDER BY id DESC LIMIT $postjson[start], $postjson[limit]");
+        
+        $res = $user->search($postjson['nome']);        
     }
-    $res = $query->fetchAll(PDO::FETCH_ASSOC);
     for ($i = 0; $i < count($res); $i++) {
         $dados[][] = array(
             'id' => $res[$i]['id'],
