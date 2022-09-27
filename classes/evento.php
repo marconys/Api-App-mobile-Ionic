@@ -70,7 +70,7 @@ Class Evento{
 
    public function update(){
     $sql = new Sql();
-    $sql->query("UPDATE eventos SET nome = :nome, data_evento = :data_evento, capacidade = :capacidade,
+    $sql->querySql("UPDATE eventos SET nome = :nome, data_evento = :data_evento, capacidade = :capacidade,
     WHERE id = :id", array(
 
         ":nome" =>$this->getNome(),
@@ -83,7 +83,7 @@ Class Evento{
 
    public function delete(){
     $sql = new Sql();
-    $sql->query("DELETE FROM eventos WHERE id = :id", array(":id"=>$this->getId()));
+    $sql->querySql("DELETE FROM eventos WHERE id = :id", array(":id"=>$this->getId()));
    }
 
    public function __construct($_nome = "", $data_evento = "", $capacidade = "", $_ativo = "", $usuarios_id = ""){

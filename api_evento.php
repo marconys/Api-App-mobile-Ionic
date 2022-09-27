@@ -77,7 +77,7 @@ else if ($postjson['requisicao'] == 'editarevent') {
 } //Final da requisição editarevent
 
 else if ($postjson['requisicao'] == 'excluirevent') {
-    $query = $pdo->query("DELETE FROM eventos WHERE id = $postjson[id]");
+    $query = $pdo->querySql("DELETE FROM eventos WHERE id = $postjson[id]");
     //$query = $pdo->query("UPDATE eventos SET ativo = 0 WHERE id = $postjson[id]");
     if ($query) {
         $result = json_encode(array('success' => true, 'msg' => "Eventoexcluido com sucesso"));
@@ -88,7 +88,7 @@ else if ($postjson['requisicao'] == 'excluirevent') {
 } //Final do excluirevent
 
 else if ($postjson['requisicao'] == 'ativarevent') {
-    $query = $pdo->query("UPDATE eventos SET ativo = 1 WHERE id = $postjson[id]");
+    $query = $pdo->querySql("UPDATE eventos SET ativo = 1 WHERE id = $postjson[id]");
     if ($query) {
         $result = json_encode(array('success' => true, 'msg' => "Evento ativado com sucesso"));
     } else {

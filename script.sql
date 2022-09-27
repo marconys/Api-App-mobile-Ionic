@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `controledb`.`eventos` (
   `ativo` BIT(1) NULL DEFAULT NULL,
   `usuarios_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`, `usuarios_id`),
-  INDEX `fk_eventos_usuarios_idx` (`usuarios_id` ASC) VISIBLE,
+  INDEX `fk_eventos_usuarios_idx` (`usuarios_id` ASC),
   CONSTRAINT `fk_eventos_usuarios`
     FOREIGN KEY (`usuarios_id`)
     REFERENCES `controledb`.`usuarios` (`id`)
