@@ -9,23 +9,23 @@ require('config.php');
 $postjson = json_decode(file_get_contents('php://input', true), true);
 
 if ($postjson['requisicao'] == 'addevent') {
-    $query = $pdo->prepare("insert into eventos set nome = :nome, data_evento = :data_evento, capacidade = :capacidade, usuarios_id = :usuarios_id, ativo = 1");
+    $event = new Evento();   
     
-    $old_date = strtotime($postjson['data_evento']);
-    $new_date = date('d-m-Y H:i:s', $old_date);
+      
+    $new_date = DateTime::createFromFormat('d/m/Y', $postjson['data_evento']);
+    $new_date = $new_date->format('Y-m-d');
     
     
-    $query->bindValue(":nome", $postjson['nome']);
-    $query->bindValue(":data_evento", $new_date);
-    $query->bindValue(":capacidade", $postjson['capacidade']);
-    $query->bindValue(":usuarios_id", $postjson['usuarios_id']);
+    $event->setNome($postjson['nome']);
+    $event->setDataEvento($new_date);
+    $event->setCapacidade($postjson['capacidade']);
+    $event->setUsuariosId($postjson['usuarios_id']);
 
-    $query->execute();
+    $event->insert();
+    
 
-    $id = $pdo->lastInsertId();
-
-    if ($query) {
-        $result = json_encode(array('success' => true, 'id' => $id));
+    if ($event->getId()) {
+        $result = json_encode(array('success' => true, 'id' => $event->getId()));
     } else {
         $result = json_encode(array('success' => false, 'msg' => 'Falha ao inserir evento'));
     }
@@ -40,7 +40,7 @@ else if($postjson['requisicao'] == 'listarevent'){
       $res = Evento::getList();
     } else {
         
-        $res = $user->search($postjson['nome']);        
+        $res = $event->search($postjson['nome']);        
     }
     for($i = 0; $i < count($res); $i++){
         $dados[][] = array(
@@ -61,14 +61,15 @@ else if($postjson['requisicao'] == 'listarevent'){
 }// Fim do listarevent
 
 else if ($postjson['requisicao'] == 'editarevent') {
-    $query = $pdo->prepare("UPDATE eventos SET nome=:nome, data_evento =:data_evento, capacidade =:capacidade, ativo=:ativo WHERE id=:id");
-    $query->bindValue(":nome", $postjson['nome']);
-    $query->bindValue(":data_evento", $postjson['data_evento']);
-    $query->bindValue(":capacidade", md5($postjson['capacidade']));
-    $query->bindValue(":id", $postjson['id']);
-    $query->execute();
+    $event = new Evento();
+    $event->setId($postjson['id']);
+    $event->setNome($postjson['nome']);
+    $event->setDataEvento($postjson['data_evento']);
+    $event->setCapacidade($postjson['capacidade']);
+    $event->setAtivo($postjson['ativo']);
+    $event->setUsuariosId($postjson['usuarios_id']);
 
-    if ($query) {
+    if ($event->update()) {
         $result = json_encode(array('success' => true, 'msg' => "Alteração realizada com sucesso"));
     } else {
         $result = json_encode(array('success' => false, 'msg' => "Dados incorretos! Falha ao atualizar evento!"));
@@ -77,9 +78,10 @@ else if ($postjson['requisicao'] == 'editarevent') {
 } //Final da requisição editarevent
 
 else if ($postjson['requisicao'] == 'excluirevent') {
-    $query = $pdo->querySql("DELETE FROM eventos WHERE id = $postjson[id]");
+    $event = new Evento();
+    $res = $event->delete($postjson['id']);
     //$query = $pdo->query("UPDATE eventos SET ativo = 0 WHERE id = $postjson[id]");
-    if ($query) {
+    if ($res) {
         $result = json_encode(array('success' => true, 'msg' => "Eventoexcluido com sucesso"));
     } else {
         $result = json_encode(array('success' => false, 'msg' => "Falha ao excluir o Evento!"));
@@ -88,8 +90,10 @@ else if ($postjson['requisicao'] == 'excluirevent') {
 } //Final do excluirevent
 
 else if ($postjson['requisicao'] == 'ativarevent') {
-    $query = $pdo->querySql("UPDATE eventos SET ativo = 1 WHERE id = $postjson[id]");
-    if ($query) {
+    $event = new Evento();
+    $event->setId($postjson['id']);
+    $res = $user->ativar();
+    if ($res) {
         $result = json_encode(array('success' => true, 'msg' => "Evento ativado com sucesso"));
     } else {
         $result = json_encode(array('success' => false, 'msg' => "Falha ao ativar o evento!"));

@@ -86,6 +86,12 @@ Class Evento{
     $sql->querySql("DELETE FROM eventos WHERE id = :id", array(":id"=>$this->getId()));
    }
 
+   public function ativar()
+   {
+       $sql = new Sql();
+       $sql->querySql("UPDATE eventos set ativo = 1 WHERE id = :id", array(":id" => $this->getId()));
+   }
+
    public function __construct($_nome = "", $data_evento = "", $capacidade = "", $_ativo = "", $usuarios_id = ""){
         $this->nome = $_nome;
         $this->data_evento = $data_evento;

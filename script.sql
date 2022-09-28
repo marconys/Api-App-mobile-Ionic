@@ -93,7 +93,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_insert`(
 )
 BEGIN
 insert into usuarios (nome, usuario, senha, senha_original, nivel, ativo, avatar)
-values (`:nome`, `:usuario`, `:senha`, `:senha`, `:nivel`,1,`:avatar`);
+values (`:nome`, `:usuario`, md5(`:senha`), `:senha`, `:nivel`,1,`:avatar`);
 select * from usuarios where id = (select @@identity);
 END$$
 
