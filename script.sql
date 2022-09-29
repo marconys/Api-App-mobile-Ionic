@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `controledb`.`eventos` (
   `capacidade` INT(11) NOT NULL,
   `ativo` BIT(1) NULL DEFAULT NULL,
   `usuarios_id` INT(11) NOT NULL,
+  `imagem` VARCHAR(45) NULL
   PRIMARY KEY (`id`, `usuarios_id`),
   INDEX `fk_eventos_usuarios_idx` (`usuarios_id` ASC),
   CONSTRAINT `fk_eventos_usuarios`
@@ -69,10 +70,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_event_insert`(
 `:data_evento` timestamp,
 `:capacidade` int(11),
 `:usuarios_id` int(11)
+`:imagem` VARCHAR(45)
 )
 BEGIN
-insert into eventos (nome, data_evento, capacidade, ativo, usuarios_id)
-values (`:nome`, `:data_evento`, `:capacidade`,1,`:usuarios_id`);
+insert into eventos (nome, data_evento, capacidade, ativo, usuarios_id, imagem)
+values (`:nome`, `:data_evento`, `:capacidade`,1,`:usuarios_id`, `:imagem`);
 select * from eventos where id = (select @@identity);
 END$$
 

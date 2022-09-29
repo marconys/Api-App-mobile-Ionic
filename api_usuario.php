@@ -61,8 +61,11 @@ else if ($postjson['requisicao'] == 'editar') {
     $user->setSenha($postjson['senha']);
     $user->setNivel($postjson['nivel']);
     $user->setAvatar($postjson['avatar']);
-    if ($user->update()) {
-        $result = json_encode(array('success' => true, 'msg' => "Deu tudo certo com alteração!"));
+
+    $user->update();
+
+    if ($user->getId() > 0) {
+        $result = json_encode(array('success' => true, 'id' => $user->getId()));
     } else {
         $result = json_encode(array('success' => false, 'msg' => "Dados incorretos! Falha ao atualizar o usuário! (WRH014587)"));
     }

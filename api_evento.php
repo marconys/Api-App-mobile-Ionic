@@ -20,6 +20,7 @@ if ($postjson['requisicao'] == 'addevent') {
     $event->setDataEvento($new_date);
     $event->setCapacidade($postjson['capacidade']);
     $event->setUsuariosId($postjson['usuarios_id']);
+    $event->setImagem($postjson['imagem']);
 
     $event->insert();
     
@@ -49,7 +50,8 @@ else if($postjson['requisicao'] == 'listarevent'){
             'data_evento' => $res[$i]['data_evento'],
             'capacidade' => $res[$i]['capacidade'],
             'usuarios_id' => $res[$i]['usuarios_id'],
-            'ativo' => $res[$i]['ativo']
+            'ativo' => $res[$i]['ativo'],
+            'imagem' => $res[$i]['imagem']
         );
     }
     if (count($res) > 0) {
@@ -62,15 +64,21 @@ else if($postjson['requisicao'] == 'listarevent'){
 
 else if ($postjson['requisicao'] == 'editarevent') {
     $event = new Evento();
+
+    $new_date = DateTime::createFromFormat('d/m/Y', $postjson['data_evento']);
+    $new_date = $new_date->format('Y-m-d');
+    
     $event->setId($postjson['id']);
     $event->setNome($postjson['nome']);
-    $event->setDataEvento($postjson['data_evento']);
+    $event->setDataEvento($new_date);
     $event->setCapacidade($postjson['capacidade']);
-    $event->setAtivo($postjson['ativo']);
     $event->setUsuariosId($postjson['usuarios_id']);
+    $event->setImagem($postjson['imagem']);
 
-    if ($event->update()) {
-        $result = json_encode(array('success' => true, 'msg' => "Alteração realizada com sucesso"));
+    $event->update();
+
+    if ($event->getId()) {
+        $result = json_encode(array('success' => true, 'id' => $event->getId()));
     } else {
         $result = json_encode(array('success' => false, 'msg' => "Dados incorretos! Falha ao atualizar evento!"));
     }
@@ -92,7 +100,7 @@ else if ($postjson['requisicao'] == 'excluirevent') {
 else if ($postjson['requisicao'] == 'ativarevent') {
     $event = new Evento();
     $event->setId($postjson['id']);
-    $res = $user->ativar();
+    $res = $event->ativar();
     if ($res) {
         $result = json_encode(array('success' => true, 'msg' => "Evento ativado com sucesso"));
     } else {

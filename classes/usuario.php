@@ -166,10 +166,11 @@ class Usuario
         );
     }
 
-    public function delete()
+    public function delete($_id)
     {
         $sql = new Sql();
-        $sql->querySql("DELETE FROM usuarios WHERE id = :id", array(":id" => $this->getId()));
+        $res = $sql->querySql("UPDATE usuarios SET ativo = 0 WHERE id = :id", array(":id" => $_id));
+        return $res;
     }
 
     public function ativar()
