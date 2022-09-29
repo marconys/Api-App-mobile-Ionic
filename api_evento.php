@@ -20,6 +20,7 @@ if ($postjson['requisicao'] == 'addevent') {
     $event->setDataEvento($new_date);
     $event->setCapacidade($postjson['capacidade']);
     $event->setUsuariosId($postjson['usuarios_id']);
+    $event->setImagem($postjson['imagem']);
     
 
     $event->insert();
