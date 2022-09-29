@@ -75,8 +75,8 @@ Class Evento{
 
    public function update(){
     $sql = new Sql();
-    $sql->querySql("UPDATE eventos SET nome = :nome, data_evento = :data_evento, capacidade = :capacidade, imagem = :imagem
-    WHERE id = :id", array(
+    $sql->querySql("UPDATE eventos SET nome = :nome, data_evento = :data_evento, capacidade = :capacidade, 
+    imagem = :imagem WHERE id = :id", array(
 
         ":nome" =>$this->getNome(),
         ":id" =>$this->getId(),
@@ -100,13 +100,12 @@ Class Evento{
        $sql->querySql("UPDATE eventos set ativo = 1 WHERE id = :id", array(":id" => $this->getId()));
    }
 
-   public function __construct($_nome = "", $data_evento = "", $capacidade = "", $_ativo = "", $usuarios_id = "", $_imagem = ""){
+   public function __construct($_nome = "", $data_evento = "", $capacidade = "", $_ativo = "", $usuarios_id = ""){
         $this->nome = $_nome;
         $this->data_evento = $data_evento;
         $this->capacidade = $capacidade;
         $this->ativo = $_ativo;
         $this->usuarios_id = $usuarios_id;
-        $this->imagem = $_imagem;
    }
 
 

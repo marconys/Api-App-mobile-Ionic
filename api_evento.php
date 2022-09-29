@@ -20,7 +20,7 @@ if ($postjson['requisicao'] == 'addevent') {
     $event->setDataEvento($new_date);
     $event->setCapacidade($postjson['capacidade']);
     $event->setUsuariosId($postjson['usuarios_id']);
-    $event->setImagem($postjson['imagem']);
+    
 
     $event->insert();
     
@@ -50,8 +50,7 @@ else if($postjson['requisicao'] == 'listarevent'){
             'data_evento' => $res[$i]['data_evento'],
             'capacidade' => $res[$i]['capacidade'],
             'usuarios_id' => $res[$i]['usuarios_id'],
-            'ativo' => $res[$i]['ativo'],
-            'imagem' => $res[$i]['imagem']
+            'ativo' => $res[$i]['ativo']
         );
     }
     if (count($res) > 0) {
